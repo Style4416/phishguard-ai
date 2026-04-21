@@ -4,7 +4,7 @@ const $ = (id) => document.getElementById(id);
 
 function showState(id) {
   ["state-loading", "state-safe", "state-phishing", "state-error"].forEach((s) => {
-    $  (s).classList.toggle("hidden", s !== id);
+    $(s).classList.toggle("hidden", s !== id);
   });
 }
 

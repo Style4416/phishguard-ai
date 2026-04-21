@@ -11,6 +11,8 @@ jobs:
   backend:
     name: Backend – Lint & Test
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
 
     steps:
       - name: Checkout code
@@ -43,6 +45,8 @@ jobs:
   ml-model:
     name: ML Model – Lint & Smoke Test
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
 
     steps:
       - name: Checkout code
@@ -72,6 +76,8 @@ jobs:
   extension:
     name: Extension – Lint
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
 
     steps:
       - name: Checkout code

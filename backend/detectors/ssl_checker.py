@@ -41,6 +41,7 @@ class SSLChecker:
         cert_info: dict = {}
         try:
             ctx = ssl.create_default_context()
+            ctx.minimum_version = ssl.TLSVersion.TLSv1_2
             with ctx.wrap_socket(
                 socket.create_connection((hostname, 443), timeout=5),
                 server_hostname=hostname,
