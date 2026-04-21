@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PhishGuard AI</title>
+  <link rel="stylesheet" href="styles/popup.css" />
+</head>
+<body>
+  <header class="header">
+    <img src="icons/icon48.png" alt="PhishGuard AI logo" class="logo" />
+    <h1>PhishGuard <span class="accent">AI</span></h1>
+  </header>
+
+  <main class="content">
+    <!-- Loading state -->
+    <section id="state-loading" class="state">
+      <div class="spinner"></div>
+      <p>Analysing page…</p>
+    </section>
+
+    <!-- Safe state -->
+    <section id="state-safe" class="state hidden">
+      <div class="verdict safe">
+        <span class="icon">✅</span>
+        <strong>Safe</strong>
+      </div>
+      <p id="safe-url" class="url-text"></p>
+      <div class="confidence-bar-wrap">
+        <label>Safety confidence</label>
+        <div class="confidence-bar">
+          <div id="safe-bar" class="bar safe-bar"></div>
+        </div>
+        <span id="safe-pct" class="pct"></span>
+      </div>
+    </section>
+
+    <!-- Phishing state -->
+    <section id="state-phishing" class="state hidden">
+      <div class="verdict phishing">
+        <span class="icon">⚠️</span>
+        <strong>Phishing Detected</strong>
+      </div>
+      <p id="phish-url" class="url-text"></p>
+      <div class="confidence-bar-wrap">
+        <label>Threat confidence</label>
+        <div class="confidence-bar">
+          <div id="phish-bar" class="bar phish-bar"></div>
+        </div>
+        <span id="phish-pct" class="pct"></span>
+      </div>
+      <ul id="risk-factors" class="risk-list"></ul>
+    </section>
+
+    <!-- Error state -->
+    <section id="state-error" class="state hidden">
+      <div class="verdict error">
+        <span class="icon">❌</span>
+        <strong>Analysis Failed</strong>
+      </div>
+      <p id="error-msg" class="small-text"></p>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <span>PhishGuard AI v0.1.0 – Rising India Hackathon 2026</span>
+  </footer>
+
+  <script src="popup.js"></script>
+</body>
+</html>

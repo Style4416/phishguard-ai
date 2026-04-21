@@ -1,0 +1,92 @@
+name: CI
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main, develop]
+
+jobs:
+  # ── Backend Tests ─────────────────────────────────────────────────────────
+  backend:
+    name: Backend – Lint & Test
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      - name: Install dependencies
+        working-directory: backend
+        run: |
+          pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install flake8 pytest pytest-asyncio httpx
+
+      - name: Lint with flake8
+        working-directory: backend
+        run: flake8 . --max-line-length=100 --exclude=__pycache__,venv
+
+      - name: Run tests
+        working-directory: backend
+        env:
+          ENVIRONMENT: test
+        run: pytest tests/ -v --tb=short
+
+  # ── ML Model Tests ────────────────────────────────────────────────────────
+  ml-model:
+    name: ML Model – Lint & Smoke Test
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      - name: Install dependencies
+        working-directory: ml-model
+        run: |
+          pip install --upgrade pip
+          pip install scikit-learn pandas numpy joblib flake8
+
+      - name: Lint with flake8
+        working-directory: ml-model
+        run: flake8 . --max-line-length=100 --exclude=__pycache__,venv,datasets,models
+
+      - name: Smoke test predict module
+        working-directory: ml-model
+        run: python -c "import predict; print('predict module OK')"
+
+  # ── Extension Lint ────────────────────────────────────────────────────────
+  extension:
+    name: Extension – Lint
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Check extension files exist
+        run: |
+          test -f extension/manifest.json
+          test -f extension/background.js
+          test -f extension/content.js
+          test -f extension/popup.html
+          test -f extension/popup.js
+          echo "All required extension files present."
